@@ -27,6 +27,16 @@ class MainTableViewCell: UITableViewCell {
 
 class MainTableViewController: UITableViewController {
 
+/*
+    // 상단의 수정 bar button 으로 삭제하기.
+    @IBAction func editList(_ sender: Any) {
+        guard !studyData.studyList.isEmpty else{
+            return
+        }
+        self.setEditing(true, animated: true)
+    }
+*/
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Uncomment the following line to preserve selection between presentations
@@ -107,8 +117,6 @@ class MainTableViewController: UITableViewController {
          */
     }
 
-
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -117,17 +125,31 @@ class MainTableViewController: UITableViewController {
     }
     */
 
-    /*
+
     // Override to support editing the table view.
+    // 테이블 section 삭제 및 studyList, ddayList 배열에서 제거.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
+        guard editingStyle == .delete else { return }
+        // Delete the row from the data source
+
+        studyData.studyList.remove(at: indexPath.section)
+        ddayData.ddayList.remove(at: indexPath.section)
+        //Cell에 존재하는 모든 데이터들을 같이 삭제해주어야 한다.
+
+        let indexSet = IndexSet(arrayLiteral: indexPath.section)
+        tableView.deleteSections(indexSet, with: .automatic)
+
+
+        /*else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }*/
     }
-    */
+
+    //delete를 한글로 바꾸기.
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "삭제"
+    }
+
 
     /*
     // Override to support rearranging the table view.

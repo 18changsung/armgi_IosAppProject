@@ -98,6 +98,9 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
             }
             count += 1
             MainTableVC.addNewItem(studyAdd: addStudy, ddayAdd: count)
+
+            
+            print(studyData.studyList) //확인.
         }
     }
 
