@@ -75,7 +75,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="249.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="zPL-b9-Kgm">
+                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="zPL-b9-Kgm">
                                                     <rect key="frame" x="0.0" y="11" width="375" height="228"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="554268577.11781502">
@@ -138,7 +138,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="endDatePicker" destination="zPL-b9-Kgm" id="apO-rX-m91"/>
+                        <outlet property="endDatePicker" destination="zPL-b9-Kgm" id="4QX-67-ElO"/>
                         <outlet property="inputSubject" destination="aD4-qr-dG8" id="9eg-JM-uke"/>
                         <outlet property="inputTest" destination="ORx-b1-Ub3" id="wLf-a3-miJ"/>
                     </connections>
@@ -216,7 +216,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="opb-qp-Xpm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="626" y="135"/>
+            <point key="canvasLocation" x="703" y="135"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UMK-Vi-TrL">

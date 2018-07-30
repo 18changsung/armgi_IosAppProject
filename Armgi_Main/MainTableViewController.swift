@@ -89,6 +89,18 @@ class MainTableViewController: UITableViewController {
         return 1
     }
 
+    //Dday 출력형식 정의
+    func ddayReturn(indexPathSection:Int) -> String{
+        switch ddayData.ddayList[indexPathSection] {
+        case 0:
+            return "D - Day"
+        case ..<0:
+            return "Dday가 이미 지났습니다."
+        default:
+            return "D - " + String(ddayData.ddayList[indexPathSection])
+        }
+    }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studyCell", for: indexPath)
 
@@ -97,7 +109,11 @@ class MainTableViewController: UITableViewController {
         guard let studyCell = cell as? MainTableViewCell else{
             return cell
         }
-        studyCell.ddayLabel.text = String(ddayData.ddayList[indexPath.section])
+
+
+        studyCell.ddayLabel.text = ddayReturn(indexPathSection: indexPath.section)
+
+
         /*
         if let dday = ddayData.ddayList{
             studyCell.ddayLabel.text = String(dday[indexPath.section])

@@ -14,7 +14,7 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var inputTest: UITextField!
 
-    @IBOutlet weak var endDatePicker: UIDatePicker!
+    @IBOutlet weak var endDatePicker: UIDatePicker! //pickerView로 선택한 마감날짜.
     
     var count:Int = 0
 
@@ -32,6 +32,7 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
 /*
     @IBAction func modalDismiss(_ sender: Any) {
         var inputStudy:String = "none"
@@ -74,6 +75,9 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
     //취소 버튼으로 모달창 닫기.
 */
 
+
+
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
@@ -87,6 +91,36 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
      //주변 터치하면 키보드 숨기기.
 */
 
+    //Dday를 구해주는 함수
+     func findDday() -> Int{
+        let todayDate = Date()
+        do {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.day]
+            formatter.unitsStyle = .full //필요.
+            if let daysString = formatter.string(from: todayDate, to: endDatePicker.date) {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .short
+                dateFormatter.timeStyle = .none
+                let startDate = dateFormatter.string(from: todayDate)
+                let endDate = dateFormatter.string(from: endDatePicker.date)
+                if startDate == endDate{
+                    return 0
+                }
+                let ddayArr = daysString.components(separatedBy: " ")
+                if let ddayIndexZero = Int(ddayArr[0].components(separatedBy: [","]).joined()){
+                    if ddayIndexZero < 0{
+                        return ddayIndexZero
+                    }
+                    else{
+                        return ddayIndexZero + 1
+                    }
+                }
+            }
+        }
+        return 9999
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "unwindDone"{
             guard let MainTableVC = segue.destination as? MainTableViewController else{
@@ -96,37 +130,13 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
             if let input1 = inputSubject.text, let input2 = inputTest.text{
                 addStudy = input1 + " " + input2
             }
-            count += 1
-            MainTableVC.addNewItem(studyAdd: addStudy, ddayAdd: count)
-
             
-            print(studyData.studyList) //확인.
+            MainTableVC.addNewItem(studyAdd: addStudy, ddayAdd: findDday())
         }
     }
 
 
     // MARK: - Table view data source
-/*
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-*/
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
 
     /*
     // Override to support conditional editing of the table view.

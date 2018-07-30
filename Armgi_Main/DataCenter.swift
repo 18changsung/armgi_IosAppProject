@@ -14,15 +14,13 @@ let ddayData:DdayData = DdayData()
 class StudyData {
     var studyList:[String] //optional로 처리 안해도 될까? 처리하면 append가 안되는데?
     init() {
-        self.studyList = ["가","나","다"]
+        self.studyList = []
     }
 }
 
 class DdayData {
     var ddayList:[Int]
     init() {
-        self.ddayList = [1,2,3]
+        self.ddayList = []
     }
 }
-
-//var studyList:[String] = ["마케팅 중간고사", "중급 재무회계 중간고사", "산업기사 필기시험", "산업기사 실기시험", "자격증 시험"]
