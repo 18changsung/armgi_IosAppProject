@@ -16,14 +16,25 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
     
     var count:Int = 0
 
+    //텍스트 필드 공백시 알림
+    let inputAlert = UIAlertController(title:"어이쿠!", message:"학습 주제가 제대로 입력되었는지\r\n확인해주세요!", preferredStyle: .alert)
+    let inputAlertAction = UIAlertAction(title:"확인", style: .default, handler: nil)
+    @objc func dismissFunc(){
+        self.inputAlert.dismiss(animated: true, completion: nil)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+
+        // 홈 버튼을 누르고 돌아오면 오류메시지 안보이기.
+        inputAlert.addAction(inputAlertAction)
+
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(dismissFunc), name: Notification.Name.UIApplicationWillResignActive, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,9 +45,6 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func doneDismiss(_ sender: Any) {
         if let studyTitleInput = studyTitleInput.text{
             if studyTitleInput == ""{
-                let inputAlert = UIAlertController(title:"어이쿠!", message:"학습 주제가 제대로 입력되었는지\r\n확인해주세요!", preferredStyle: .alert)
-                let inputAlertAction = UIAlertAction(title:"확인", style: .default, handler: nil)
-                inputAlert.addAction(inputAlertAction)
                 self.present(inputAlert, animated: true, completion: nil)
             }else{
                 studyData.studyList.append(studyTitleInput)

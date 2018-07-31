@@ -103,11 +103,7 @@ class MainTableViewController: UITableViewController {
             return cell
         }
         studyCell.ddayLabel.text = ddayReturn(indexPathSection: indexPath.section)
-        /*
-        if let dday = ddayData.ddayList{
-            studyCell.ddayLabel.text = String(dday[indexPath.section])
-        }
-        */
+      
         return studyCell
     }
 
