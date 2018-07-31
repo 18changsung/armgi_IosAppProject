@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
-                            <tableViewSection headerTitle="과목명" id="6kd-Zd-mD2">
+                            <tableViewSection headerTitle="학습 주제" id="6kd-Zd-mD2">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="afa-fY-yC3">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
@@ -27,39 +27,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="과목명을 작성해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aD4-qr-dG8">
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="학습 주제를 작성해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aD4-qr-dG8">
                                                     <rect key="frame" x="16" y="6" width="343" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="E0i-Jy-AXk" id="IhY-ig-Z5z"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="시험명" id="tVp-ke-51Q">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="lr5-YU-Cvx">
-                                        <rect key="frame" x="0.0" y="100" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lr5-YU-Cvx" id="KKT-k6-6JI">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="시험명을 작성해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ORx-b1-Ub3">
-                                                    <rect key="frame" x="16" y="6" width="343" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="E0i-Jy-AXk" id="PLU-QK-MnN"/>
-                                                    </connections>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -69,7 +42,7 @@
                             <tableViewSection headerTitle="디데이" id="b2Y-KU-adG">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="250" id="lsv-EB-Ljl">
-                                        <rect key="frame" x="0.0" y="172" width="375" height="250"/>
+                                        <rect key="frame" x="0.0" y="100" width="375" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lsv-EB-Ljl" id="2zC-XA-y4D">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="249.5"/>
@@ -90,7 +63,7 @@
                             <tableViewSection headerTitle="목표량 설정" id="UAH-qS-xEv">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="150" id="g4n-c5-EZs">
-                                        <rect key="frame" x="0.0" y="450" width="375" height="150"/>
+                                        <rect key="frame" x="0.0" y="378" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="g4n-c5-EZs" id="l0a-fs-QOX">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
@@ -128,23 +101,21 @@
                     <navigationItem key="navigationItem" title="D-day, 목표량 설정" id="XQk-sE-gYy">
                         <barButtonItem key="leftBarButtonItem" title="취소" id="ySr-nI-XgL">
                             <connections>
-                                <segue destination="zi8-N3-Bb7" kind="unwind" identifier="unwindCancel" unwindAction="unwindToMainWithSeque:" id="pme-7f-mw4"/>
+                                <action selector="cancelDismiss:" destination="E0i-Jy-AXk" id="XW2-jD-IpL"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="완료" id="M0k-Wt-igW">
                             <connections>
-                                <segue destination="zi8-N3-Bb7" kind="unwind" identifier="unwindDone" unwindAction="unwindToMainWithSeque:" id="TTC-v6-M0g"/>
+                                <action selector="doneDismiss:" destination="E0i-Jy-AXk" id="qx0-mJ-j7n"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="endDatePicker" destination="zPL-b9-Kgm" id="4QX-67-ElO"/>
-                        <outlet property="inputSubject" destination="aD4-qr-dG8" id="9eg-JM-uke"/>
-                        <outlet property="inputTest" destination="ORx-b1-Ub3" id="wLf-a3-miJ"/>
+                        <outlet property="studyTitleInput" destination="aD4-qr-dG8" id="cCb-tR-vi6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ncY-gT-OYd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="zi8-N3-Bb7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2436" y="-629"/>
         </scene>
@@ -205,7 +176,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lnX-WK-CVv" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KgT-zr-ajU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="KgT-zr-ajU">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -223,7 +194,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xqy-h0-MFX" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="viP-p8-xgB">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="viP-p8-xgB">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

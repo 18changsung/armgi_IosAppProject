@@ -36,7 +36,6 @@ class MainTableViewController: UITableViewController {
         self.setEditing(true, animated: true)
     }
 */
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Uncomment the following line to preserve selection between presentations
@@ -46,19 +45,13 @@ class MainTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    func addNewItem(studyAdd:String, ddayAdd:Int){
-        studyData.studyList.append(studyAdd)
-        ddayData.ddayList.append(ddayAdd)
+    override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
     }
 
-    @IBAction func unwindToMain(seque:UIStoryboardSegue){
-        print("Now_Main")
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -109,11 +102,7 @@ class MainTableViewController: UITableViewController {
         guard let studyCell = cell as? MainTableViewCell else{
             return cell
         }
-
-
         studyCell.ddayLabel.text = ddayReturn(indexPathSection: indexPath.section)
-
-
         /*
         if let dday = ddayData.ddayList{
             studyCell.ddayLabel.text = String(dday[indexPath.section])
@@ -141,7 +130,6 @@ class MainTableViewController: UITableViewController {
     }
     */
 
-
     // Override to support editing the table view.
     // 테이블 section 삭제 및 studyList, ddayList 배열에서 제거.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -155,7 +143,6 @@ class MainTableViewController: UITableViewController {
         let indexSet = IndexSet(arrayLiteral: indexPath.section)
         tableView.deleteSections(indexSet, with: .automatic)
 
-
         /*else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }*/
@@ -165,7 +152,6 @@ class MainTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "삭제"
     }
-
 
     /*
     // Override to support rearranging the table view.

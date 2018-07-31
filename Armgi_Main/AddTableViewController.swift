@@ -10,9 +10,7 @@ import UIKit
 
 class AddTableViewController: UITableViewController, UITextFieldDelegate {
 
-    @IBOutlet weak var inputSubject: UITextField!
-
-    @IBOutlet weak var inputTest: UITextField!
+    @IBOutlet weak var studyTitleInput: UITextField!
 
     @IBOutlet weak var endDatePicker: UIDatePicker! //pickerView로 선택한 마감날짜.
     
@@ -33,49 +31,26 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-/*
-    @IBAction func modalDismiss(_ sender: Any) {
-        var inputStudy:String = "none"
-        if let input1 = inputSubject.text, let input2 = inputTest.text{
-            inputStudy = input1 + " " + input2
-        }
-        studyData.studyList.append(inputStudy)
-        /*
-        if var list = studyData.studyList{
-            list.append(inputStudy)
-        }
-         */
-        //과목, 시험 텍스트필드에 입력된 값을 합쳐서 리스트에 추가.
-        print(studyData.studyList) //확인.
-
-        /* Presenting 관계를 이용.
-        switch self.presentingViewController {
-        case let tabBarC as UITabBarController:
-            if let navigationC = tabBarC.selectedViewController as? UINavigationController, let MainTableVC = navigationC.topViewController as? MainTableViewController{
-                MainTableVC.addNewItem(studyData.studyList, ddayData.ddayList)
+    @IBAction func doneDismiss(_ sender: Any) {
+        if let studyTitleInput = studyTitleInput.text{
+            if studyTitleInput == ""{
+                let inputAlert = UIAlertController(title:"어이쿠!", message:"학습 주제가 제대로 입력되었는지\r\n확인해주세요!", preferredStyle: .alert)
+                let inputAlertAction = UIAlertAction(title:"확인", style: .default, handler: nil)
+                inputAlert.addAction(inputAlertAction)
+                self.present(inputAlert, animated: true, completion: nil)
+            }else{
+                studyData.studyList.append(studyTitleInput)
+                ddayData.ddayList.append(findDday())
+                self.dismiss(animated: true, completion: nil)
             }
-        case let navigationC as UINavigationController:
-            if let MainTableVC = navigationC.topViewController as? MainTableViewController{
-                MainTableVC.addNewItem(studyData.studyList, ddayData.ddayList)
-            }
-        case let MainTableVC as MainTableViewController:
-                MainTableVC.addNewItem(studyData.studyList, ddayData.ddayList)
-        default:
-            break
         }
-        */
-
-        self.dismiss(animated: true, completion: nil)
     }
     //완료 버튼으로 모달창 닫기.
 
-    @IBAction func modalCancel(_ sender: Any) {
+    @IBAction func cancelDismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     //취소 버튼으로 모달창 닫기.
-*/
-
-
 
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -121,20 +96,17 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
         return 9999
     }
 
+/*
+    // unwind
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "unwindDone"{
             guard let MainTableVC = segue.destination as? MainTableViewController else{
                 return
             }
-            var addStudy:String = "none"
-            if let input1 = inputSubject.text, let input2 = inputTest.text{
-                addStudy = input1 + " " + input2
-            }
-            
             MainTableVC.addNewItem(studyAdd: addStudy, ddayAdd: findDday())
         }
     }
-
+*/
 
     // MARK: - Table view data source
 
@@ -172,15 +144,4 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
         return true
     }
     */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
