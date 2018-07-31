@@ -13,7 +13,15 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var studyTitleInput: UITextField!
 
     @IBOutlet weak var endDatePicker: UIDatePicker! //pickerView로 선택한 마감날짜.
-    
+
+    @IBOutlet weak var goalValueLabel: UILabel!
+
+    @IBOutlet weak var stepperValue: UIStepper!
+
+    @IBAction func stepperAction(_ sender: Any) {
+        goalValueLabel.text = "\(Int(stepperValue.value))"
+    }
+
     var count:Int = 0
 
     //텍스트 필드 공백시 알림
@@ -29,6 +37,7 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+
 
         // 홈 버튼을 누르고 돌아오면 오류메시지 안보이기.
         inputAlert.addAction(inputAlertAction)
@@ -49,6 +58,7 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
             }else{
                 studyData.studyList.append(studyTitleInput)
                 ddayData.ddayList.append(findDday())
+                goalData.goalList.append(Int(stepperValue.value))
                 self.dismiss(animated: true, completion: nil)
             }
         }
@@ -59,7 +69,6 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     //취소 버튼으로 모달창 닫기.
-
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)

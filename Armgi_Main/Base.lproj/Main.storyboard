@@ -33,6 +33,9 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="E0i-Jy-AXk" id="93F-GM-Ar0"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -79,9 +82,12 @@
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="RTE-Gh-muZ">
                                                     <rect key="frame" x="140" y="94" width="94" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="stepperAction:" destination="E0i-Jy-AXk" eventType="valueChanged" id="rxO-Yz-rsD"/>
+                                                    </connections>
                                                 </stepper>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEq-Yk-Kjq">
-                                                    <rect key="frame" x="180" y="58" width="15" height="30"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEq-Yk-Kjq">
+                                                    <rect key="frame" x="149" y="59" width="78" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                     <nil key="textColor"/>
@@ -112,12 +118,14 @@
                     </navigationItem>
                     <connections>
                         <outlet property="endDatePicker" destination="zPL-b9-Kgm" id="4QX-67-ElO"/>
+                        <outlet property="goalValueLabel" destination="GEq-Yk-Kjq" id="T6d-2P-yXW"/>
+                        <outlet property="stepperValue" destination="RTE-Gh-muZ" id="pCn-iI-JVe"/>
                         <outlet property="studyTitleInput" destination="aD4-qr-dG8" id="cCb-tR-vi6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ncY-gT-OYd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2436" y="-629"/>
+            <point key="canvasLocation" x="2436" y="-629.2353823088456"/>
         </scene>
         <!--학습 목표-->
         <scene sceneID="qKR-kx-k25">

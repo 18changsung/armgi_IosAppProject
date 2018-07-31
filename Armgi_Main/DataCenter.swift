@@ -10,6 +10,7 @@ import Foundation
 
 let studyData:StudyData = StudyData()
 let ddayData:DdayData = DdayData()
+let goalData:GoalData = GoalData()
 
 class StudyData {
     var studyList:[String] //optional로 처리 안해도 될까? 처리하면 append가 안되는데?
@@ -22,6 +23,13 @@ class DdayData {
     var ddayList:[Int]
     init() {
         self.ddayList = []
+    }
+}
+
+class GoalData{
+    var goalList:[Int]
+    init() {
+        self.goalList = []
     }
 }
 
