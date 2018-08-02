@@ -8,7 +8,20 @@
 
 import UIKit
 
-class AddTableViewController: UITableViewController, UITextFieldDelegate {
+class AddTableViewController: UITableViewController, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+
+    //목표량 바 색상 선택
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataCenter.templateColor.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath)
+
+        cell.backgroundColor = UIColor().colorFromHex(dataCenter.templateColor[indexPath.row])
+        return cell
+
+    }
 
     @IBOutlet weak var studyTitleInput: UITextField!
 
@@ -25,7 +38,7 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
     var count:Int = 0
 
     //텍스트 필드 공백시 알림
-    let inputAlert = UIAlertController(title:"어이쿠!", message:"학습 주제가 제대로 입력되었는지\r\n확인해주세요!", preferredStyle: .alert)
+    let inputAlert = UIAlertController(title:"어이쿠!", message:"학습 주제나 목표량이 제대로 입력되었는지\r\n확인해주세요!", preferredStyle: .alert)
     let inputAlertAction = UIAlertAction(title:"확인", style: .default, handler: nil)
     @objc func dismissFunc(){
         self.inputAlert.dismiss(animated: true, completion: nil)
@@ -38,12 +51,14 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
         // self.clearsSelectionOnViewWillAppear = false
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 
-
         // 홈 버튼을 누르고 돌아오면 오류메시지 안보이기.
         inputAlert.addAction(inputAlertAction)
-
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(dismissFunc), name: Notification.Name.UIApplicationWillResignActive, object: nil)
+
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 10
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,12 +68,12 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
 
     @IBAction func doneDismiss(_ sender: Any) {
         if let studyTitleInput = studyTitleInput.text{
-            if studyTitleInput == ""{
+            if studyTitleInput == "" || Int(stepperValue.value) == 0{
                 self.present(inputAlert, animated: true, completion: nil)
             }else{
-                studyData.studyList.append(studyTitleInput)
-                ddayData.ddayList.append(findDday())
-                goalData.goalList.append(Int(stepperValue.value))
+                dataCenter.studyList.append(studyTitleInput)
+                dataCenter.ddayList.append(findDday())
+                dataCenter.goalData.goalList.append(Float(stepperValue.value))
                 self.dismiss(animated: true, completion: nil)
             }
         }
