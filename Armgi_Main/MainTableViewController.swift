@@ -15,9 +15,8 @@ class MainTableViewCell: UITableViewCell {
     @IBOutlet weak var goalStateBar: UIView!
 
     @IBOutlet weak var goalStateLabel: UILabel!
-
-    @IBOutlet weak var starImage: UIImageView!
     
+    @IBOutlet weak var starImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -103,18 +102,20 @@ class MainTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studyCell", for: indexPath)
-
+        
         // Configure the cell...
 
         guard let studyCell = cell as? MainTableViewCell else{
             return cell
         }
         studyCell.ddayLabel.text = ddayReturn(indexPathSection: indexPath.section)
+        studyCell.goalStateBar.backgroundColor = UIColor().colorFromHex(dataCenter.templateColor[dataCenter.selectedColor[indexPath.section]])
 
         let goalVal = dataCenter.goalData.currentGoalVal/dataCenter.goalData.goalList[indexPath.section]
         if goalVal <= 1.0{
             studyCell.goalStateBar.frame.size.width = CGFloat(goalVal*343)
             //아이폰 사이즈에 따라 343이 아닐 수도 있음.
+            //let cellWidth = ((UIScreen.mainScreen().bounds.width) — 32–30 ) / 3
 
             studyCell.goalStateLabel.text = String(Int(goalVal*100)) + "%"
             if goalVal == 1.0{
@@ -124,6 +125,7 @@ class MainTableViewController: UITableViewController {
             }
             print(goalVal)
 
+            dataCenter.collectionViewCellCurrent = 0 //다시 파란색으로 초기화.
         }
         return studyCell
     }
@@ -161,7 +163,6 @@ class MainTableViewController: UITableViewController {
             dataCenter.ddayList.remove(at: indexPath.section)
             dataCenter.goalData.goalList.remove(at: indexPath.section)
 
-            dataCenter.goalData.currentGoalVal = 0
 
             // Delete the row from the data source
             let indexSet = IndexSet(arrayLiteral: indexPath.section)

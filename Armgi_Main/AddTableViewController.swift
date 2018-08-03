@@ -10,6 +10,8 @@ import UIKit
 
 class AddTableViewController: UITableViewController, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
 
+    @IBOutlet weak var collectionView: UICollectionView!
+
     //목표량 바 색상 선택
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataCenter.templateColor.count
@@ -17,10 +19,29 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath)
-
         cell.backgroundColor = UIColor().colorFromHex(dataCenter.templateColor[indexPath.row])
+        //처음 박스를 검은색으로 미리 설정.
+        if indexPath.row == 0{
+            cell.layer.borderColor = UIColor.black.cgColor
+            cell.layer.borderWidth = 2.0
+        }
         return cell
 
+    }
+
+    //다른 박스 선택시 기존 박스 체크 해제
+    var preCellIndex:IndexPath = [0,0]
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        let preCell = collectionView.cellForItem(at: preCellIndex)
+        if indexPath != preCellIndex{
+            cell?.layer.borderColor = UIColor.black.cgColor
+            cell?.layer.borderWidth = 2.0
+            preCell?.layer.borderWidth = 0
+            preCellIndex = indexPath
+            dataCenter.collectionViewCellCurrent = indexPath.row
+        }
     }
 
     @IBOutlet weak var studyTitleInput: UITextField!
@@ -57,8 +78,11 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
         notificationCenter.addObserver(self, selector: #selector(dismissFunc), name: Notification.Name.UIApplicationWillResignActive, object: nil)
 
         let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 10
 
+        layout.minimumInteritemSpacing = 20
+        layout.minimumLineSpacing = 20 //?
+
+        collectionView.collectionViewLayout = layout
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,7 +98,9 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
                 dataCenter.studyList.append(studyTitleInput)
                 dataCenter.ddayList.append(findDday())
                 dataCenter.goalData.goalList.append(Float(stepperValue.value))
+                dataCenter.selectedColor.append(dataCenter.collectionViewCellCurrent)
                 self.dismiss(animated: true, completion: nil)
+
             }
         }
     }
@@ -150,17 +176,6 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
     }
     */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
 
     /*
     // Override to support rearranging the table view.

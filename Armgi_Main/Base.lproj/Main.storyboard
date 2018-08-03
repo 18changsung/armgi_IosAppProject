@@ -74,7 +74,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4Ym-mW-RR6">
-                                                    <rect key="frame" x="47" y="5" width="269" height="65"/>
+                                                    <rect key="frame" x="53" y="11" width="269" height="53"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kXH-fR-bQb">
@@ -85,13 +85,12 @@
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="center" restorationIdentifier="colorCell" reuseIdentifier="colorCell" id="RPH-or-ApZ">
-                                                            <rect key="frame" x="0.0" y="7.5" width="50" height="50"/>
+                                                            <rect key="frame" x="0.0" y="1.5" width="50" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                             </view>
-                                                            <color key="backgroundColor" red="1" green="0.14901960784313725" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </collectionViewCell>
                                                     </cells>
                                                     <connections>
@@ -158,6 +157,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="collectionView" destination="4Ym-mW-RR6" id="Fqv-V9-U4c"/>
                         <outlet property="endDatePicker" destination="zPL-b9-Kgm" id="4QX-67-ElO"/>
                         <outlet property="goalValueLabel" destination="fEW-ap-5Qh" id="FPV-qR-VZv"/>
                         <outlet property="stepperValue" destination="Wth-ep-Gyd" id="J5z-RP-coJ"/>
@@ -282,6 +282,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Q40-xL-WkD" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="L0w-IA-XUa">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
