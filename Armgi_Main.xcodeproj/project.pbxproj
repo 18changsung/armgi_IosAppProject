@@ -17,6 +17,8 @@
 		672916C6210AFC5D0028E8A4 /* TodoList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 672916C5210AFC5D0028E8A4 /* TodoList.txt */; };
 		67A308272112A67C001FBCC4 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A308262112A67C001FBCC4 /* QuizViewController.swift */; };
 		67A308312112FCDF001FBCC4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A308302112FCDF001FBCC4 /* Extensions.swift */; };
+		67A3083321158273001FBCC4 /* UnitTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A3083221158272001FBCC4 /* UnitTableViewController.swift */; };
+		67A308352115830E001FBCC4 /* ModeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A308342115830E001FBCC4 /* ModeTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		672916C5210AFC5D0028E8A4 /* TodoList.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TodoList.txt; sourceTree = "<group>"; };
 		67A308262112A67C001FBCC4 /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
 		67A308302112FCDF001FBCC4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		67A3083221158272001FBCC4 /* UnitTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTableViewController.swift; sourceTree = "<group>"; };
+		67A308342115830E001FBCC4 /* ModeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +70,9 @@
 			children = (
 				67291687210971780028E8A4 /* AppDelegate.swift */,
 				6729168B210971780028E8A4 /* Main.storyboard */,
+				67A308342115830E001FBCC4 /* ModeTableViewController.swift */,
 				67291699210971ED0028E8A4 /* MainTableViewController.swift */,
+				67A3083221158272001FBCC4 /* UnitTableViewController.swift */,
 				6729169B210971FA0028E8A4 /* AddTableViewController.swift */,
 				6729169D210A00B90028E8A4 /* DataCenter.swift */,
 				67A308262112A67C001FBCC4 /* QuizViewController.swift */,
@@ -151,9 +157,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67A3083321158273001FBCC4 /* UnitTableViewController.swift in Sources */,
 				6729169A210971ED0028E8A4 /* MainTableViewController.swift in Sources */,
 				67A308312112FCDF001FBCC4 /* Extensions.swift in Sources */,
 				67A308272112A67C001FBCC4 /* QuizViewController.swift in Sources */,
+				67A308352115830E001FBCC4 /* ModeTableViewController.swift in Sources */,
 				6729169E210A00B90028E8A4 /* DataCenter.swift in Sources */,
 				67291688210971780028E8A4 /* AppDelegate.swift in Sources */,
 				6729169C210971FA0028E8A4 /* AddTableViewController.swift in Sources */,
