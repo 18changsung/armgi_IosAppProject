@@ -11,13 +11,9 @@ import UIKit
 class MainTableViewCell: UITableViewCell {
 
     @IBOutlet weak var ddayLabel: UILabel! //DdayLabel
-
     @IBOutlet weak var goalStateBar: UIView!
-
     @IBOutlet weak var goalStateBarBack: UIView!
-    
     @IBOutlet weak var goalStateLabel: UILabel!
-    
     @IBOutlet weak var starImage: UIImageView!
 
     override func awakeFromNib() {
@@ -59,21 +55,18 @@ class MainTableViewController: UITableViewController {
         self.setEditing(true, animated: true)
     }
 
+    var selectedColor:[Int] = [] // Add에서 선택한 색깔 담음.
+    var delegate:WordTableViewController?
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.selectedSubjectName.text = dataCenter.studyList[indexPath.section]
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     override func viewWillAppear(_ animated: Bool) {
-/*        if dataCenter.studyList.count != 0{
-            tableView.backgroundView = nil
-        }else{
-            tableView.backgroundView = noItemsView
-        }*/
         self.tableView.reloadData()
     }
 
@@ -81,8 +74,6 @@ class MainTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -93,11 +84,6 @@ class MainTableViewController: UITableViewController {
         else
         {
             tableView.backgroundView = noDataView
-//            let imageName = "blank.png"
-//            let noDataImage = UIImage(named: imageName)
-//            let noDataView = UIImageView(image: noDataImage)
-//
-//            tableView.backgroundView = noDataView
         }
         return dataCenter.studyList.count
     }
@@ -121,8 +107,6 @@ class MainTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studyCell", for: indexPath)
-        
-        // Configure the cell...
 
         guard let studyCell = cell as? MainTableViewCell else{
             return cell
@@ -142,9 +126,6 @@ class MainTableViewController: UITableViewController {
             }else{
                 studyCell.starImage.image = nil
             }
-            print(goalVal)
-
-            dataCenter.collectionViewCellCurrent = 0 //다시 파란색으로 초기화.
         }
         return studyCell
     }
@@ -183,19 +164,4 @@ class MainTableViewController: UITableViewController {
 
         return [delete, edit]
     }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 }

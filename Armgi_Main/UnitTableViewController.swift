@@ -8,11 +8,12 @@
 
 import UIKit
 
-class unitTableViewController: UITableViewController {
+class unitTableViewController: UITableViewController, UITextFieldDelegate {
+
+    @IBOutlet weak var newUnitName: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -29,32 +30,45 @@ class unitTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
+    }
+
+    //키보드 완료 버튼 누르면 키보드 숨기기.
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        let rowCount = dataCenter.unitList.count
+        return rowCount
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "unitCells", for: indexPath)
+        let unit = dataCenter.unitList[indexPath.row]
+        cell.textLabel?.text = unit.unitName
+        cell.detailTextLabel?.text = "\(unit.allWords.count + unit.allSentences.count)"
         return cell
-    }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
     }
-    */
 
+    @IBAction func addNewUnit(_ sender: Any) {
+        if let newUnit = newUnitName.text {
+            if newUnit == "" {
+                return
+            } else {
+                dataCenter.unitList.append(OneUnit(unitName: newUnit))
+            }
+        }
+        self.newUnitName.text = nil
+        self.tableView.reloadData()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -62,7 +76,7 @@ class unitTableViewController: UITableViewController {
         // 제거할 때 한 번 더물어보기.
         let deleteAlert = UIAlertController(title:"정말?", message:"단원을 삭제하시겠습니까?\r\n삭제시 내용 복구가 불가능합니다.", preferredStyle: .alert)
         let deleteOk = UIAlertAction(title:"확인", style: .destructive) { (action : UIAlertAction) in
-            //dataCenter.unitList.remove(at: indexPath.row)
+            dataCenter.unitList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let deleteCancel = UIAlertAction(title:"취소", style: .cancel, handler:nil)
@@ -74,4 +88,15 @@ class unitTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "삭제"
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        let nextViewcontroller = segue.destination as? SegmentViewController
+        let selectedIndexPath = self.tableView.indexPathForSelectedRow
+        if let indexPath = selectedIndexPath {
+            nextViewcontroller?.selectedUnit = dataCenter.unitList[indexPath.row]
+        }
+    }
+
 }
