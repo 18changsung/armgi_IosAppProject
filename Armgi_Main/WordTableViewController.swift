@@ -27,7 +27,8 @@ class WordsCell: UITableViewCell {
 
 class WordTableViewController: UITableViewController, UITextFieldDelegate{
     
-    var selectedUnit:OneUnit?
+    var selectedUnit: OneUnit?
+    var delegate: MyArmgiTableViewController?
 
     @IBOutlet weak var selectedSubjectName: UILabel!
     @IBOutlet weak var selectedUnitName: UILabel!
@@ -36,10 +37,12 @@ class WordTableViewController: UITableViewController, UITextFieldDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         selectedUnitName.text = selectedUnit?.unitName
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        //tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -80,8 +83,8 @@ class WordTableViewController: UITableViewController, UITextFieldDelegate{
         if selectedUnit?.allWords[indexPath.row].starImageFlag == true{
             cell.starMark.image = UIImage(named: "goalStar")
         }
-        selectedUnit?.allWords[indexPath.row].starFlag = true
 
+        //cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
         return cell
     }
     
@@ -95,9 +98,7 @@ class WordTableViewController: UITableViewController, UITextFieldDelegate{
         }
         self.newKeyword.text = nil
         self.newExplanation.text = nil
-        selectedUnit?.allWords.reverse()
         self.tableView.reloadData()
-        selectedUnit?.allWords.reverse()
     }
 
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -107,19 +108,23 @@ class WordTableViewController: UITableViewController, UITextFieldDelegate{
         }
 
         let star = UITableViewRowAction(style: .normal, title: "별표") { (action, indexPath) in
+
             if self.selectedUnit?.allWords[indexPath.row].starFlag == true{
                 let starCell = self.tableView.cellForRow(at: indexPath) as! WordsCell
                 starCell.starMark.image = UIImage(named: "goalStar")
                 self.selectedUnit?.allWords[indexPath.row].starImageFlag = true
                 self.selectedUnit?.allWords[indexPath.row].starFlag = false
 
-                //dataCenter.starList.append()
+                let starText = "\(self.selectedUnit?.allWords[indexPath.row].keyword)\r\n\(self.selectedUnit?.allWords[indexPath.row].explanation)"
+                self.delegate?.starText?.append(starText)
+                //dataCenter.starList.append(starText)
 
-            } else{ // 별표 한 번 더 누르면 해제
+            } else { // 별표 한 번 더 누르면 해제
                 let starCell = self.tableView.cellForRow(at: indexPath) as! WordsCell
                 starCell.starMark.image = nil
                 self.selectedUnit?.allWords[indexPath.row].starImageFlag = false
                 self.selectedUnit?.allWords[indexPath.row].starFlag = true
+                //dataCenter.starList.remove(at: indexPath.row)
             }
         }
         star.backgroundColor = UIColor().colorFromHex("#F9C835")

@@ -78,9 +78,9 @@
 			children = (
 				67291687210971780028E8A4 /* AppDelegate.swift */,
 				6729168B210971780028E8A4 /* Main.storyboard */,
-				67A3085E21182A7B001FBCC4 /* MyArmgiTableViewController.swift */,
 				67291699210971ED0028E8A4 /* MainTableViewController.swift */,
 				6729169B210971FA0028E8A4 /* AddTableViewController.swift */,
+				67A3085E21182A7B001FBCC4 /* MyArmgiTableViewController.swift */,
 				67A308342115830E001FBCC4 /* ModeTableViewController.swift */,
 				67A3083221158272001FBCC4 /* UnitTableViewController.swift */,
 				6729169D210A00B90028E8A4 /* DataCenter.swift */,

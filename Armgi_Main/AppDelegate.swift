@@ -13,9 +13,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    func getFilePath(withFileName fileName:String) -> String{
+        let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let docDir = dirPath[0] as NSString
+        let filePath = docDir.appendingPathComponent(fileName)
+        return filePath
+    }
+
+    func saveData(){
+        let filePath = getFilePath(withFileName: "dataCenter.dat")
+        NSKeyedArchiver.archiveRootObject(dataCenter, toFile: filePath)
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        let filePath = getFilePath(withFileName: "dataCenter.dat")
+        let fileManager = FileManager.default
+        if fileManager.fileExists(atPath: filePath) {
+            if let data = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? DataCenter {
+                dataCenter = data
+            }
+        }
+
         return true
     }
 
@@ -25,12 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        saveData()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -38,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        saveData()
     }
 
 
