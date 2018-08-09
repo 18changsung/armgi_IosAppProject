@@ -26,7 +26,7 @@ class starCell: UITableViewCell {
 
 class MyArmgiTableViewController: UITableViewController {
 
-    var starText:[String]?
+    var starList:[String]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,15 @@ class MyArmgiTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print(starText)
+        for i in 0 ..< dataCenter.studyList.count{
+            for j in 0 ..< dataCenter.studyList[i]!.oneUnitData.count{
+                for k in 0 ..< dataCenter.studyList[i]!.oneUnitData[j].allWords.count{
+                    if dataCenter.studyList[i]!.oneUnitData[j].allWords[k].starFlag == true {
+                        starList?.append("\(dataCenter.studyList[i]!.oneUnitData[j].allWords[k].keyword)\r\n\(dataCenter.studyList[i]!.oneUnitData[j].allWords[k].explanation)")
+                    }
+                }
+            }
+        }
         self.tableView.reloadData()
     }
 
@@ -56,8 +64,10 @@ class MyArmgiTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return dataCenter.starList.count
+        if let newStarList = starList{
+            return newStarList.count
+        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -68,16 +78,10 @@ class MyArmgiTableViewController: UITableViewController {
         }
 
         // if 키워드 방식이라면
-        starCell.starTextView.text = "\(dataCenter.starList[indexPath.row])"
+        starCell.starTextView.text = "\(starList?[indexPath.row])"
 
         starCell.starMark.image = UIImage(named: "goalStar")
 
         return starCell
-    }
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let WordTVC = segue.destination as? WordTableViewController
-        WordTVC?.delegate = self
     }
 }

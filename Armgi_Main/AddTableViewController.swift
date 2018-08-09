@@ -47,15 +47,10 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
         print(collectionViewCellCurrent)
     }
 
-
     @IBOutlet weak var studyTitleInput: UITextField!
-
     @IBOutlet weak var endDatePicker: UIDatePicker! //pickerView로 선택한 마감날짜.
-
     @IBOutlet weak var goalValueLabel: UILabel!
-
     @IBOutlet weak var stepperValue: UIStepper!
-
     @IBAction func stepperAction(_ sender: Any) {
         goalValueLabel.text = "\(Int(stepperValue.value))"
     }
@@ -63,6 +58,7 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
     //텍스트 필드 공백시 알림
     let inputAlert = UIAlertController(title:"어이쿠!", message:"학습 주제나 목표량이 제대로 입력되었는지\r\n확인해주세요!", preferredStyle: .alert)
     let inputAlertAction = UIAlertAction(title:"확인", style: .default, handler: nil)
+
     @objc func dismissFunc(){
         self.inputAlert.dismiss(animated: true, completion: nil)
     }
@@ -92,8 +88,11 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
         if let studyTitleInput = studyTitleInput.text{
             if studyTitleInput == "" || Int(stepperValue.value) == 0{
                 self.present(inputAlert, animated: true, completion: nil)
-            }else{
-                dataCenter.studyList.append(studyTitleInput)
+            } else {
+                dataCenter.studyList[dataCenter.selectedStudy] = Study(subjectName: studyTitleInput)
+
+                dataCenter.selectedStudy += 1
+
                 dataCenter.ddayList.append(findDday())
                 dataCenter.goalData.goalList.append(Float(stepperValue.value))
                 dataCenter.selectedColor.append(collectionViewCellCurrent)
