@@ -33,7 +33,6 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
 
     //다른 박스 선택시 기존 박스 체크 해제
     var preCellIndex:IndexPath = [0,0]
-
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         let preCell = collectionView.cellForItem(at: preCellIndex)
@@ -47,8 +46,9 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
         print(collectionViewCellCurrent)
     }
 
+
     @IBOutlet weak var studyTitleInput: UITextField!
-    @IBOutlet weak var endDatePicker: UIDatePicker! //pickerView로 선택한 마감날짜.
+    @IBOutlet weak var endDatePicker: UIDatePicker! // pickerView로 선택한 마감날짜.
     @IBOutlet weak var goalValueLabel: UILabel!
     @IBOutlet weak var stepperValue: UIStepper!
     @IBAction func stepperAction(_ sender: Any) {
@@ -65,12 +65,10 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // 홈 버튼을 누르고 돌아오면 오류메시지 안보이기.
         inputAlert.addAction(inputAlertAction)
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(dismissFunc), name: Notification.Name.UIApplicationWillResignActive, object: nil)
-
         // 콜렉션 뷰 셀 간격.
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 20
@@ -83,16 +81,16 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
         // Dispose of any resources that can be recreated.
     }
 
+
 //완료 버튼으로 모달창 닫기.
     @IBAction func doneDismiss(_ sender: Any) {
         if let studyTitleInput = studyTitleInput.text{
             if studyTitleInput == "" || Int(stepperValue.value) == 0{
                 self.present(inputAlert, animated: true, completion: nil)
             } else {
-                dataCenter.studyList[dataCenter.selectedStudy] = Study(subjectName: studyTitleInput)
-
-                dataCenter.selectedStudy += 1
-
+                dataCenter.studyList[dataCenter.chosenSubject] = Study(subjectName: studyTitleInput)
+                dataCenter.chosenSubject += 1
+                print(dataCenter.studyList)
                 dataCenter.ddayList.append(findDday())
                 dataCenter.goalData.goalList.append(Float(stepperValue.value))
                 dataCenter.selectedColor.append(collectionViewCellCurrent)
@@ -105,7 +103,6 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
     @IBAction func cancelDismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
 
 //키보드 완료 버튼 누르면 키보드 숨기기.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

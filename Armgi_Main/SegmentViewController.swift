@@ -18,9 +18,8 @@ class SegmentViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-    
+
     @IBAction func switchViews(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             wordsView.alpha = 1
@@ -33,7 +32,6 @@ class SegmentViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -44,5 +42,4 @@ class SegmentViewController: UIViewController {
         } else if segue.identifier == "toSentencesView" {
         }
     }
-
 }

@@ -13,7 +13,7 @@ var dataCenter:DataCenter = DataCenter()
 class DataCenter: NSObject, NSCoding{
 
     var studyList:[Int:Study]
-    var selectedStudy:Int
+    var chosenSubject:Int
     var ddayList:[Int]
     var goalData:GoalData
     var selectedColor:[Int]
@@ -22,7 +22,7 @@ class DataCenter: NSObject, NSCoding{
 
     override init(){
         self.studyList = [:]
-        self.selectedStudy = 0
+        self.chosenSubject = 0
         self.ddayList = []
         self.goalData = GoalData(currentGoalVal: 0)
         self.selectedColor = []
@@ -33,7 +33,7 @@ class DataCenter: NSObject, NSCoding{
 
     public func encode(with aCoder: NSCoder) {
         aCoder.encode(self.studyList, forKey: "studyList")
-        aCoder.encode(self.selectedStudy, forKey: "selectedStudy")
+        aCoder.encode(self.chosenSubject, forKey: "chosenSubject")
         aCoder.encode(self.ddayList, forKey: "ddayList")
         aCoder.encode(self.goalData, forKey: "goalData")
         aCoder.encode(self.selectedColor, forKey: "selectedColor")
@@ -46,10 +46,10 @@ class DataCenter: NSObject, NSCoding{
         } else {
             self.studyList = [:]
         }
-        if let selectedStudy = aDecoder.decodeObject(forKey:"selectedStudy") as? Int{
-            self.selectedStudy = selectedStudy
+        if let chosenSubject = aDecoder.decodeObject(forKey:"chosenSubject") as? Int{
+            self.chosenSubject = chosenSubject
         } else {
-            self.selectedStudy = 0
+            self.chosenSubject = 0
         }
         if let ddayList = aDecoder.decodeObject(forKey:"ddayList") as? [Int]{
             self.ddayList = ddayList
@@ -76,19 +76,19 @@ class DataCenter: NSObject, NSCoding{
 
 class Study: NSObject, NSCoding {
     var subjectName:String
-    var unitName:[String]
-    var oneUnitData:[OneUnit]
+    var chosenUnit:Int
+    var unitList:[OneUnit]
 
     init(subjectName:String) {
         self.subjectName = subjectName
-        self.unitName = []
-        self.oneUnitData = []
+        self.chosenUnit = 0
+        self.unitList = []
     }
 
     public func encode(with aCoder: NSCoder) {
         aCoder.encode(self.subjectName, forKey: "studyName")
-        aCoder.encode(self.unitName, forKey: "unitName")
-        aCoder.encode(self.oneUnitData, forKey: "oneUnitData")
+        aCoder.encode(self.chosenUnit, forKey: "chosenUnit")
+        aCoder.encode(self.unitList, forKey: "unitList")
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -97,38 +97,46 @@ class Study: NSObject, NSCoding {
         } else {
             self.subjectName = ""
         }
-        if let unitName = aDecoder.decodeObject(forKey:"unitName") as? [String]{
-            self.unitName = unitName
+        if let chosenUnit = aDecoder.decodeObject(forKey:"chosenUnit") as? Int{
+            self.chosenUnit = chosenUnit
         } else {
-            self.unitName = []
+            self.chosenUnit = 0
         }
-        if let oneUnitData = aDecoder.decodeObject(forKey:"oneUnitData") as? [OneUnit]{
-            self.oneUnitData = oneUnitData
+        if let unitList = aDecoder.decodeObject(forKey:"unitList") as? [OneUnit]{
+            self.unitList = unitList
         } else {
-            self.oneUnitData = []
+            self.unitList = []
         }
     }
 }
 
 class OneUnit: NSObject, NSCoding {
+    var unitName:String
     var allWords:[Words] // 단어식
     var allSentences:[String] // 문장식
 
-    init(allWords:[Words], allSentences:[String]) {
+    init(unitName:String, allWords:[Words], allSentences:[String]) {
+        self.unitName = unitName
         self.allWords = allWords
         self.allSentences = allSentences
     }
 
-    convenience init(allWords:[Words]){
-        self.init(allWords: allWords)
+    convenience init(unitName: String) {
+        self.init(unitName: unitName, allWords: [], allSentences: [])
     }
 
     public func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.unitName, forKey: "unitName")
         aCoder.encode(self.allWords, forKey: "allWords")
         aCoder.encode(self.allSentences, forKey: "allSentences")
     }
 
     public required init?(coder aDecoder: NSCoder) {
+        if let unitName = aDecoder.decodeObject(forKey:"unitName") as? String{
+            self.unitName = unitName
+        } else {
+            self.unitName = ""
+        }
         if let allWords = aDecoder.decodeObject(forKey:"allWords") as? [Words]{
             self.allWords = allWords
         } else {
@@ -143,7 +151,7 @@ class OneUnit: NSObject, NSCoding {
 
 }
 
-class Words: NSObject, NSCoding{ //단어들
+class Words: NSObject, NSCoding{
     var keyword:String
     var explanation:String
     var starFlag:Bool

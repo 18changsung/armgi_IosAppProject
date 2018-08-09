@@ -453,7 +453,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6rp-lf-40Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1641" y="-722"/>
+            <point key="canvasLocation" x="1641" y="-860"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="s23-hw-xwp">
@@ -737,10 +737,10 @@
             </objects>
             <point key="canvasLocation" x="5242" y="134"/>
         </scene>
-        <!--Title-->
+        <!--모드-->
         <scene sceneID="z37-kv-Zka">
             <objects>
-                <viewController id="JdE-Fh-1gY" sceneMemberID="viewController">
+                <viewController id="JdE-Fh-1gY" customClass="ModeViewController" customModule="Armgi_Main" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b4w-fN-rOS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -758,7 +758,7 @@
                                                     <color key="titleColor" red="0.41568627450980394" green="0.42745098039215684" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="M1o-gf-2EO" kind="show" id="pvQ-Cv-KSV"/>
+                                                    <segue destination="M1o-gf-2EO" kind="show" identifier="modeOneSegue" id="pvQ-Cv-KSV"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -780,7 +780,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="M1o-gf-2EO" kind="show" id="372-dS-2fM"/>
+                                                    <segue destination="M1o-gf-2EO" kind="show" identifier="modeTwoSegue" id="372-dS-2fM"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -802,7 +802,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="M1o-gf-2EO" kind="show" id="CnV-cL-p9Y"/>
+                                                    <segue destination="M1o-gf-2EO" kind="show" identifier="modeTrdSegue" id="CnV-cL-p9Y"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -827,7 +827,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CdI-fI-FuX"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="80g-o1-IqQ"/>
+                    <navigationItem key="navigationItem" title="모드" id="80g-o1-IqQ"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lXU-gm-EcD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -836,7 +836,7 @@
         <!--단원-->
         <scene sceneID="lvB-QK-XJv">
             <objects>
-                <tableViewController id="M1o-gf-2EO" customClass="unitTableViewController" customModule="Armgi_Main" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="M1o-gf-2EO" customClass="UnitTableViewController" customModule="Armgi_Main" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="l7i-jD-Fm4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -911,7 +911,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="urV-NX-nF3" kind="show" id="uhY-cb-cMh"/>
+                                    <segue destination="urV-NX-nF3" kind="show" id="vkk-zs-5Pl"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1471,6 +1471,6 @@
         <image name="blank" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="372-dS-2fM"/>
+        <segue reference="CnV-cL-p9Y"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class unitTableViewController: UITableViewController, UITextFieldDelegate {
+class UnitTableViewController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var newUnitName: UITextField!
 
@@ -24,6 +24,7 @@ class unitTableViewController: UITableViewController, UITextFieldDelegate {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        print(selectedUnit)
         self.tableView.reloadData()
     }
 
@@ -42,35 +43,35 @@ class unitTableViewController: UITableViewController, UITextFieldDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let rowCount = dataCenter.studyList[selectedSubject]?.unitName.count
+        let rowCount = dataCenter.studyList[selectedSubject]?.unitList.count
         return rowCount!
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "unitCells", for: indexPath)
-        cell.textLabel?.text = dataCenter.studyList[selectedSubject]?.unitName[indexPath.row]
-        let unitCount = dataCenter.studyList[selectedSubject]?.oneUnitData.count
-        if unitCount! > 0 {
-            let unit = dataCenter.studyList[selectedSubject]?.oneUnitData[indexPath.row]
-            cell.detailTextLabel?.text = "\(unit?.allWords.count) + \(unit?.allSentences.count)"
-        } else {
-            cell.detailTextLabel?.text = "0"
-        }
+        cell.textLabel?.text = dataCenter.studyList[selectedSubject]?.unitList[indexPath.row].unitName
+        //let unitCount = dataCenter.studyList[selectedSubject]?.unitList.count
+        //if unitCount! > 0 {
+        let unit = dataCenter.studyList[selectedSubject]?.unitList[indexPath.row]
+        cell.detailTextLabel?.text = "\(unit!.allWords.count) , \(unit!.allSentences.count)"
+//        } else {
+//            cell.detailTextLabel?.text = "0"
+//        }
         return cell
-
     }
 
+// 새로운 단원명 버튼으로 추가하기.
     @IBAction func addNewUnit(_ sender: Any) {
-
         if let newUnit = newUnitName.text {
             if newUnit == "" {
                 return
             } else {
-                dataCenter.studyList[selectedSubject]?.unitName.append(newUnit)
+                // let chosenUnit = dataCenter.studyList[selectedSubject]?.chosenUnit
+                dataCenter.studyList[selectedSubject]?.unitList.append(OneUnit(unitName: newUnit))
+                // dataCenter.studyList[selectedSubject]?.chosenUnit += 1
             }
         }
         self.newUnitName.text = nil
-
         self.tableView.reloadData()
     }
 
@@ -79,8 +80,7 @@ class unitTableViewController: UITableViewController, UITextFieldDelegate {
         // 제거할 때 한 번 더물어보기.
         let deleteAlert = UIAlertController(title:"정말?", message:"단원을 삭제하시겠습니까?\r\n삭제시 내용 복구가 불가능합니다.", preferredStyle: .alert)
         let deleteOk = UIAlertAction(title:"확인", style: .destructive) { (action : UIAlertAction) in
-            dataCenter.studyList[self.selectedSubject]?.unitName.remove(at: indexPath.row)
-            dataCenter.studyList[self.selectedSubject]?.oneUnitData.remove(at: indexPath.row)
+            dataCenter.studyList[self.selectedSubject]?.unitList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let deleteCancel = UIAlertAction(title:"취소", style: .cancel, handler:nil)
