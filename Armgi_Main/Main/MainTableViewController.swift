@@ -50,6 +50,7 @@ class MainTableViewController: UITableViewController {
 
     var selectedColor:[Int] = [] // Add에서 선택한 색깔 담음.
     var selectedSubject:Int = 0
+    var edit:Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -177,6 +178,8 @@ class MainTableViewController: UITableViewController {
                 dataCenter.selectedColor.remove(at:indexPath.section)
                 dataCenter.goalData.currentGoalVal.remove(at: indexPath.section)
 
+                dataCenter.pickerList.remove(at: indexPath.section)
+
                 // Delete the row from the data source
                 let indexSet = IndexSet(arrayLiteral: indexPath.section)
                 tableView.deleteSections(indexSet, with: .automatic)
@@ -190,7 +193,12 @@ class MainTableViewController: UITableViewController {
         }
 
         let edit = UITableViewRowAction(style: .normal, title: "수정") { (action, indexPath) in
-            // edit item at indexPath
+            self.edit = true
+            if let AddTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddTVC") as? AddTableViewController {
+                AddTVC.selectedSubject = indexPath.section
+                AddTVC.edit = self.edit
+                self.present(AddTVC, animated: true, completion: nil)
+            }
         }
 
         edit.backgroundColor = UIColor.gray
@@ -199,9 +207,11 @@ class MainTableViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let UnitVC = segue.destination as? UnitTableViewController
-        if let selectedIndexPath = self.tableView.indexPathForSelectedRow {
-            UnitVC?.selectedSubject = selectedIndexPath.section
+        if segue.identifier == "unitSegue" {
+            let UnitVC = segue.destination as? UnitTableViewController
+            if let selectedIndexPath = self.tableView.indexPathForSelectedRow {
+                UnitVC?.selectedSubject = selectedIndexPath.section
+            }
         }
     }
 

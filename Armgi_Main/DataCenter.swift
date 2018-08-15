@@ -14,8 +14,10 @@ class DataCenter: NSObject, NSCoding{
 
     var studyList:[Study]
     var ddayList:[Int]
+    var pickerList:[Date] // 수정을 위한..
     var goalData:GoalData
     var selectedColor:[Int]
+
     var todayDate:Date // 앱을 처음 실행한 날짜가 들어갈 것이고..
 
     var templateColor:[String]
@@ -25,6 +27,7 @@ class DataCenter: NSObject, NSCoding{
     override init() {
         self.studyList = []
         self.ddayList = []
+        self.pickerList = []
         self.goalData = GoalData()
         self.selectedColor = []
         self.todayDate = Date()
@@ -38,6 +41,7 @@ class DataCenter: NSObject, NSCoding{
     public func encode(with aCoder: NSCoder) {
         aCoder.encode(self.studyList, forKey: "studyList")
         aCoder.encode(self.ddayList, forKey: "ddayList")
+        aCoder.encode(self.pickerList, forKey: "pickerList")
         aCoder.encode(self.goalData, forKey: "goalData")
         aCoder.encode(self.selectedColor, forKey: "selectedColor")
         aCoder.encode(self.todayDate, forKey: "todayDate")
@@ -55,6 +59,11 @@ class DataCenter: NSObject, NSCoding{
             self.ddayList = ddayList
         } else {
             self.ddayList = []
+        }
+        if let pickerList = aDecoder.decodeObject(forKey:"pickerList") as? [Date]{
+            self.pickerList = pickerList
+        } else {
+            self.pickerList = []
         }
         if let goalData = aDecoder.decodeObject(forKey:"goalData") as? GoalData{
             self.goalData = goalData

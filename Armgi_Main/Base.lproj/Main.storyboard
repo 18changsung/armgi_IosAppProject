@@ -14,7 +14,7 @@
         <!--학습 목표 설정-->
         <scene sceneID="jzo-3p-GR8">
             <objects>
-                <tableViewController id="E0i-Jy-AXk" customClass="AddTableViewController" customModule="Armgi_Main" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AddTVC" id="E0i-Jy-AXk" customClass="AddTableViewController" customModule="Armgi_Main" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="U4y-3o-nxm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -321,7 +321,7 @@
                                     <outlet property="goalStateBarBack" destination="bKr-8v-etc" id="umB-lO-Wgi"/>
                                     <outlet property="goalStateLabel" destination="aJQ-7T-ucO" id="Gc1-xJ-2dw"/>
                                     <outlet property="starImage" destination="Xez-kN-TI2" id="k8h-uk-PnS"/>
-                                    <segue destination="zd2-Zq-2Sz" kind="show" id="moO-fw-fG8"/>
+                                    <segue destination="zd2-Zq-2Sz" kind="show" identifier="unitSegue" id="moO-fw-fG8"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -334,7 +334,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Es5-Vg-uhr">
                             <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="xqy-h0-MFX" kind="presentation" id="vzq-6s-CQV"/>
+                                <segue destination="xqy-h0-MFX" kind="presentation" identifier="addSegue" id="vzq-6s-CQV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1713,11 +1713,11 @@
                     <navigationItem key="navigationItem" id="gBg-mX-z7q">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Jk9-4T-owP">
-                            <rect key="frame" x="53" y="7.5" width="269" height="29"/>
+                            <rect key="frame" x="53" y="7" width="269" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="단어식"/>
-                                <segment title="문장식"/>
+                                <segment title="Basic"/>
+                                <segment title="Flip"/>
                             </segments>
                             <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>

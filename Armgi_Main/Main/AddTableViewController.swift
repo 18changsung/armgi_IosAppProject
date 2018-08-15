@@ -13,6 +13,9 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
     @IBOutlet weak var collectionView: UICollectionView!
 
     var collectionViewCellCurrent = 0
+    var selectedSubject:Int = 0
+    var edit:Bool = false
+    var pickerData:Date = Date() // 오직 수정만을 위한.
 
     //목표량 바 색상 선택
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -80,11 +83,21 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // 홈 버튼을 누르고 돌아오면 오류메시지 안보이기.
         inputAlert.addAction(inputAlertAction)
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(dismissFunc), name: Notification.Name.UIApplicationWillResignActive, object: nil)
+
+        if edit {
+            studyTitleInput.text = dataCenter.studyList[selectedSubject].subjectName
+            endDatePicker.date = dataCenter.pickerList[selectedSubject]
+            goalValueLabel.text = String(Int(dataCenter.goalData.goalList[selectedSubject]))
+            stepperValue.value = Double(dataCenter.goalData.goalList[selectedSubject])
+
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: [0,collectionViewCellCurrent])
+            cell.layer.borderColor = UIColor.black.cgColor
+            cell.layer.borderWidth = 2.0
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -95,21 +108,42 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
 
 //완료 버튼으로 모달창 닫기.
     @IBAction func doneDismiss(_ sender: Any) {
-        if let studyTitleInput = studyTitleInput.text{
-            if studyTitleInput == "" || Int(stepperValue.value) == 0{
-                self.present(inputAlert, animated: true, completion: nil)
-            } else {
+        if !edit {
+            if let studyTitleInput = studyTitleInput.text{
+                if studyTitleInput == "" || Int(stepperValue.value) == 0{
+                    self.present(inputAlert, animated: true, completion: nil)
+                } else {
 
-                // 추가하는 데이터.
-                dataCenter.studyList.append(Study(subjectName: studyTitleInput))
-                dataCenter.ddayList.append(findDday())
-                dataCenter.goalData.goalList.append(Float(stepperValue.value))
-                dataCenter.selectedColor.append(collectionViewCellCurrent)
-                dataCenter.goalData.currentGoalVal.append(Float(0))
+                    // 추가하는 데이터.
+                    dataCenter.studyList.append(Study(subjectName: studyTitleInput))
+                    dataCenter.ddayList.append(findDday())
+                    dataCenter.pickerList.append(pickerData)
 
-                self.dismiss(animated: true, completion: nil)
+                    dataCenter.goalData.goalList.append(Float(stepperValue.value))
+                    dataCenter.selectedColor.append(collectionViewCellCurrent)
+                    dataCenter.goalData.currentGoalVal.append(Float(0))
+
+
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        } else {
+            if let studyTitleInput = studyTitleInput.text{
+                if studyTitleInput == "" || Int(stepperValue.value) == 0{
+                    self.present(inputAlert, animated: true, completion: nil)
+                } else {
+                    // 추가하는 데이터.
+                    dataCenter.studyList[selectedSubject] = Study(subjectName: studyTitleInput)
+                    dataCenter.ddayList[selectedSubject] = findDday()
+                    dataCenter.goalData.goalList[selectedSubject] = Float(stepperValue.value)
+                    dataCenter.selectedColor[selectedSubject] = collectionViewCellCurrent
+                    dataCenter.goalData.currentGoalVal[selectedSubject] = Float(0)
+
+                    self.dismiss(animated: true, completion: nil)
+                }
             }
         }
+
     }
 
 //취소 버튼으로 모달창 닫기.
@@ -124,8 +158,9 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, UIColl
     }
 
 //Dday를 구해주는 함수
-     func findDday() -> Int{
+    func findDday() -> Int{
         let todayDate = Date()
+        pickerData = endDatePicker.date
         do {
             let formatter = DateComponentsFormatter()
             formatter.allowedUnits = [.day]

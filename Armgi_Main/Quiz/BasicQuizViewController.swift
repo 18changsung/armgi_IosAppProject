@@ -33,6 +33,7 @@ class BasicQuizViewController: UIViewController {
     var questionSentencesList:[String] = []
     var answerWordsList:[String] = []
     var answerSentencesList:[[String]] = []
+    var button:[Int:Bool] = [:]
 
     var pop:Bool = false
 
@@ -110,8 +111,6 @@ class BasicQuizViewController: UIViewController {
         answerLabel.text = ""
         starButton.isHidden = true
         incorrectButton.isHidden = true
-        preButton.isHidden = true
-        nextButton.isHidden = true
     }
 
     @IBAction func CheckButton(_ sender: Any) {
@@ -166,45 +165,39 @@ class BasicQuizViewController: UIViewController {
                 answerIndex += 1
             }
         }
-
+        
         starButton.isHidden = false
-        preButton.isHidden = false
-        nextButton.isHidden = false
         self.view.endEditing(true)
     }
 
     @IBAction func NextButtton(_ sender: Any) {
-        self.quizCardView.NextButton()
-
-        incorrectButton.isEnabled = true
-        checkButton.isEnabled = true
-
-        qIndex += 1
         let count:Int = dataCenter.studyList[selectedSubject].unitList[selectedUnit].allWords.count + dataCenter.studyList[selectedSubject].unitList[selectedUnit].allSentences.count
-
+        qIndex += 1
         if qIndex >= count {
             print ("암기 퀴즈가 끝났습니다!\r\n목표량이 일 증가합니다.")
             dataCenter.goalData.currentGoalVal[selectedSubject] += 1
             checkButton.isEnabled = false
-
+            
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CelebrateVC") as?CelebrateViewController {
                 vc.delegate = self
                 present(vc, animated: true, completion: nil)
             }
-
+        } else {
+            incorrectButton.isEnabled = true
+            checkButton.isEnabled = true
+            self.quizCardView.NextButton()
         }
         answerTF.text = "" // 텍스트 필드 비워주기.
         self.viewWillAppear(true)
     }
 
     @IBAction func PreButton(_ sender: Any) {
-        self.quizCardView.PreButton()
-
         incorrectButton.isEnabled = true
         checkButton.isEnabled = true
 
         if qIndex > 0 {
             qIndex -= 1
+            self.quizCardView.PreButton()
         }
         answerTF.text = "" // 텍스트 필드 비워주기.
         self.viewWillAppear(true)
