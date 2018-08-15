@@ -12,44 +12,44 @@ var dataCenter:DataCenter = DataCenter()
 
 class DataCenter: NSObject, NSCoding{
 
-    var studyList:[Int:Study]
-    var chosenSubject:Int
+    var studyList:[Study]
     var ddayList:[Int]
     var goalData:GoalData
     var selectedColor:[Int]
+    var todayDate:Date // 앱을 처음 실행한 날짜가 들어갈 것이고..
 
     var templateColor:[String]
+    
+    var repeatedWeekdays:[Int]
 
-    override init(){
-        self.studyList = [:]
-        self.chosenSubject = 0
+    override init() {
+        self.studyList = []
         self.ddayList = []
-        self.goalData = GoalData(currentGoalVal: 0)
+        self.goalData = GoalData()
         self.selectedColor = []
+        self.todayDate = Date()
 
         self.templateColor = ["#60ADED","#8EFA00","#FFFB00","#FF2600"]
         //순서대로 파란색,초록색,노란색,빨간색
+        
+        self.repeatedWeekdays = []
     }
 
     public func encode(with aCoder: NSCoder) {
         aCoder.encode(self.studyList, forKey: "studyList")
-        aCoder.encode(self.chosenSubject, forKey: "chosenSubject")
         aCoder.encode(self.ddayList, forKey: "ddayList")
         aCoder.encode(self.goalData, forKey: "goalData")
         aCoder.encode(self.selectedColor, forKey: "selectedColor")
+        aCoder.encode(self.todayDate, forKey: "todayDate")
         aCoder.encode(self.templateColor, forKey: "templateColor")
+        aCoder.encode(self.repeatedWeekdays, forKey: "repeatedWeekdays")
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        if let studyList = aDecoder.decodeObject(forKey:"studyList") as? [Int:Study]{
+        if let studyList = aDecoder.decodeObject(forKey:"studyList") as? [Study]{
             self.studyList = studyList
         } else {
-            self.studyList = [:]
-        }
-        if let chosenSubject = aDecoder.decodeObject(forKey:"chosenSubject") as? Int{
-            self.chosenSubject = chosenSubject
-        } else {
-            self.chosenSubject = 0
+            self.studyList = []
         }
         if let ddayList = aDecoder.decodeObject(forKey:"ddayList") as? [Int]{
             self.ddayList = ddayList
@@ -59,17 +59,27 @@ class DataCenter: NSObject, NSCoding{
         if let goalData = aDecoder.decodeObject(forKey:"goalData") as? GoalData{
             self.goalData = goalData
         } else {
-            self.goalData = GoalData(currentGoalVal: 0)
+            self.goalData = GoalData()
         }
         if let selectedColor = aDecoder.decodeObject(forKey:"selectedColor") as? [Int]{
             self.selectedColor = selectedColor
         } else {
             self.selectedColor = []
         }
+        if let todayDate = aDecoder.decodeObject(forKey:"todayDate") as? Date{
+            self.todayDate = todayDate
+        } else {
+            self.todayDate = Date()
+        }
         if let templateColor = aDecoder.decodeObject(forKey:"templateColor") as? [String]{
             self.templateColor = templateColor
         } else {
             self.templateColor = ["#60ADED","#8EFA00","#FFFB00","#FF2600"]
+        }
+        if let repeatedWeekdays = aDecoder.decodeObject(forKey:"repeatedWeekdays") as? [Int] {
+            self.repeatedWeekdays = repeatedWeekdays
+        } else {
+            self.repeatedWeekdays = []
         }
     }
 }
@@ -86,7 +96,7 @@ class Study: NSObject, NSCoding {
     }
 
     public func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.subjectName, forKey: "studyName")
+        aCoder.encode(self.subjectName, forKey: "subjectName")
         aCoder.encode(self.chosenUnit, forKey: "chosenUnit")
         aCoder.encode(self.unitList, forKey: "unitList")
     }
@@ -113,12 +123,14 @@ class Study: NSObject, NSCoding {
 class OneUnit: NSObject, NSCoding {
     var unitName:String
     var allWords:[Words] // 단어식
-    var allSentences:[String] // 문장식
+    var allSentences:[Sentences] // 문장식
+    var sentencesQuiz:[[String]]
 
-    init(unitName:String, allWords:[Words], allSentences:[String]) {
+    init(unitName:String, allWords:[Words], allSentences:[Sentences]) {
         self.unitName = unitName
         self.allWords = allWords
         self.allSentences = allSentences
+        self.sentencesQuiz = []
     }
 
     convenience init(unitName: String) {
@@ -129,6 +141,7 @@ class OneUnit: NSObject, NSCoding {
         aCoder.encode(self.unitName, forKey: "unitName")
         aCoder.encode(self.allWords, forKey: "allWords")
         aCoder.encode(self.allSentences, forKey: "allSentences")
+        aCoder.encode(self.sentencesQuiz, forKey: "sentencesQuiz")
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -142,10 +155,15 @@ class OneUnit: NSObject, NSCoding {
         } else {
             self.allWords = []
         }
-        if let allSentences = aDecoder.decodeObject(forKey:"allSenctences") as? [String]{
+        if let allSentences = aDecoder.decodeObject(forKey:"allSentences") as? [Sentences]{
             self.allSentences = allSentences
         } else {
             self.allSentences = []
+        }
+        if let sentencesQuiz = aDecoder.decodeObject(forKey:"sentencesQuiz") as? [[String]]{
+            self.sentencesQuiz = sentencesQuiz
+        } else {
+            self.sentencesQuiz = []
         }
     }
 
@@ -154,25 +172,25 @@ class OneUnit: NSObject, NSCoding {
 class Words: NSObject, NSCoding{
     var keyword:String
     var explanation:String
-    var starFlag:Bool
-    var starImageFlag:Bool
+    var starFlag:Bool? // optional로 안했더니 계속 terminate 후, true로 초기화 됨. 그리고 wordTVC에서 nil처리 해줌.
+    var odapCount:Int
 
     init(keyword:String, explanation:String) {
         self.keyword = keyword
         self.explanation = explanation
-        self.starFlag = true
-        self.starImageFlag = false
+        // self.starFlag = true
+        self.odapCount = 0
     }
 
     public func encode(with aCoder: NSCoder) {
         aCoder.encode(self.keyword, forKey: "keyword")
         aCoder.encode(self.explanation, forKey: "explanation")
         aCoder.encode(self.starFlag, forKey: "starFlag")
-        aCoder.encode(self.starImageFlag, forKey: "starImageFlag")
+        aCoder.encode(self.odapCount, forKey: "odapCount")
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        if let keyword = aDecoder.decodeObject(forKey:"keyWord") as? String{
+        if let keyword = aDecoder.decodeObject(forKey:"keyword") as? String{
             self.keyword = keyword
         } else {
             self.keyword = ""
@@ -182,26 +200,60 @@ class Words: NSObject, NSCoding{
         } else {
             self.explanation = ""
         }
-        if let starFlag = aDecoder.decodeObject(forKey:"starFlag") as? Bool{
+        if let starFlag = aDecoder.decodeObject(forKey:"starFlag") as? Bool? {
             self.starFlag = starFlag
         } else {
-            self.starFlag = false
+            self.starFlag = true
         }
-        if let starImageFlag = aDecoder.decodeObject(forKey:"starImageFlag") as? Bool{
-            self.starImageFlag = starImageFlag
+        if let odapCount = aDecoder.decodeObject(forKey:"odapCount") as? Int{
+            self.odapCount = odapCount
         } else {
-            self.starImageFlag = false
+            self.odapCount = 0
+        }
+    }
+}
+
+class Sentences: NSObject, NSCoding { // starFlag, starImageFlag 가 아카이빙할 때 겹치지 않을까?
+    var sentences:String
+    var starFlag:Bool?
+    var odapCount:Int
+
+    init(sentences:String) {
+        self.sentences = sentences
+        self.odapCount = 0
+    }
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.sentences, forKey: "sentences")
+        aCoder.encode(self.starFlag, forKey: "starFlag")
+        aCoder.encode(self.odapCount, forKey: "odapCount")
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        if let sentences = aDecoder.decodeObject(forKey:"sentences") as? String {
+            self.sentences = sentences
+        } else {
+            self.sentences = " "
+        }
+        if let starFlag = aDecoder.decodeObject(forKey:"starFlag") as? Bool? {
+            self.starFlag = starFlag
+        } else {
+            self.starFlag = true
+        }
+        if let odapCount = aDecoder.decodeObject(forKey:"odapCount") as? Int{
+            self.odapCount = odapCount
+        } else {
+            self.odapCount = 0
         }
     }
 }
 
 class GoalData: NSObject, NSCoding {
     var goalList:[Float]
-    var currentGoalVal:Float
+    var currentGoalVal:[Float]
 
-    init(currentGoalVal:Float) {
+    override init() {
         self.goalList = []
-        self.currentGoalVal = currentGoalVal
+        self.currentGoalVal = []
     }
 
     public func encode(with aCoder: NSCoder) {
@@ -210,15 +262,15 @@ class GoalData: NSObject, NSCoding {
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        if let goalList = aDecoder.decodeObject(forKey:"goalList") as? [Float]{
+        if let goalList = aDecoder.decodeObject(forKey:"goalList") as? [Float] {
             self.goalList = goalList
         } else {
             self.goalList = []
         }
-        if let currentGoalVal = aDecoder.decodeObject(forKey:"currentGoalVal") as? Float{
+        if let currentGoalVal = aDecoder.decodeObject(forKey:"currentGoalVal") as? [Float] {
             self.currentGoalVal = currentGoalVal
         } else {
-            self.currentGoalVal = 0
+            self.currentGoalVal = []
         }
     }
 }
